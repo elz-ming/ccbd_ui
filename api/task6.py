@@ -4,16 +4,15 @@ from transformers import pipeline
 from transformers import BertTokenizer, BertForSequenceClassification
 
 # Authenticate to Twitter using Twitter API v2
-client = tweepy.Client(bearer_token=secret.BEARER_TOKEN)  # requires secret.py, which is not included in the repository. ask from han yi
+client = tweepy.Client(bearer_token=secret.BEARER_TOKEN)  # requires secret.py, which is not included in the repository cause idw my keys to be exposed. ask from han yi
 
 # Load pre-trained model and tokenizer
-# REQUIRES TO FINE TUNE MODEL FIRST! (at pytorch or tensorflow i guess)
-# tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-# model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
+# REQUIRES TO FINE TUNE MODEL FIRST! this is done at task6-bert.py so pls run "python api/task6-bert.py" first
+tokenizer = BertTokenizer.from_pretrained('./fine-tuned-bert')
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
 
 # Load pre-trained sentiment analysis pipeline
-# sentiment_pipeline = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer)
-sentiment_pipeline = pipeline("sentiment-analysis")
+sentiment_pipeline = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer)
 
 def fetch_tweets(query, max_results=10, tweet_fields=['text', 'lang']):
     while True:
