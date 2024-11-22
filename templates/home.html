@@ -35,8 +35,14 @@
         </div>
       </section>
       <section id="section-2">
-        <h2>Section 2</h2>
-        <!-- Placeholder for section 2 -->
+        <h2>Task 2 - Negative Reasons per Airline</h2>
+        <div class="section-content">
+          {% if task2_chart %}
+          <img src="{{ task2_chart }}" alt="Task 2 Chart" />
+          {% else %}
+          <p>No data available for Section 4.</p>
+          {% endif %}
+        </div>
       </section>
       <section id="section-3">
         <h2>Section 3</h2>
