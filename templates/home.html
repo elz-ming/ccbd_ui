@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Big Data P1 Group 3</title>
+    <title>{{ title }}</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
@@ -15,24 +15,8 @@
     </header>
     <main>
       <section id="section-1">
-        <h2>Task 1 - Delay Data</h2>
-        <div class="section-content">
-          {% if task1_chart.airline_chart %}
-          <img
-            src="{{ task1_chart.airline_chart }}"
-            alt="Airline Delays Chart"
-          />
-          {% else %}
-          <p>No data available for airline delays.</p>
-          {% endif %} {% if task1_chart.airport_chart %}
-          <img
-            src="{{ task1_chart.airport_chart }}"
-            alt="Airport Delays Chart"
-          />
-          {% else %}
-          <p>No data available for airport delays.</p>
-          {% endif %}
-        </div>
+        <h2>Section 1</h2>
+        <!-- Placeholder for section 1 -->
       </section>
       <section id="section-2">
         <h2>Section 2</h2>
@@ -43,10 +27,10 @@
         <!-- Placeholder for section 3 -->
       </section>
       <section id="section-4">
-        <h2>Task 4 - Mean Trust Score</h2>
+        <h2>Section 4</h2>
         <div class="section-content">
-          {% if task4_chart %}
-          <img src="{{ task4_chart }}" alt="Task 4 Chart" />
+          {% if section_4_chart %}
+          <img src="{{ section_4_chart }}" alt="Section 4 Chart" />
           {% else %}
           <p>No data available for Section 4.</p>
           {% endif %}

@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
-import task1
 import task4
 
 load_dotenv()
@@ -18,18 +17,15 @@ app = Flask(__name__, template_folder="../templates",
 
 @app.route('/')
 def home():
-
-    task1_data = task1.query_task1_data(collection)
-    task1_chart = task1.create_task1_chart(task1_data)
-
-    task4_data = task4.query_task4_data(collection)
-    task4_chart = task4.create_task4_chart(task4_data)
+    # Query data for section-4
+    section_4_data = task4.query_section_4_data(collection)
+    section_4_chart = task4.create_section_4_chart(section_4_data)
 
     # Pass data and chart to the template
     return render_template(
         "home.html",
-        task1_chart=task1_chart,
-        task4_chart=task4_chart,
+        title="Cloud Computing P1 Group 3",
+        section_4_chart=section_4_chart,
     )
 
 
