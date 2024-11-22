@@ -21,7 +21,6 @@ app = Flask(__name__, template_folder="../templates",
 
 @app.route('/')
 def home():
-
     task1_data = query_task1_data(collection)
     task1_chart = create_task1_chart(task1_data)
 
