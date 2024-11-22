@@ -1,11 +1,18 @@
 import tweepy
 import secret
 from transformers import pipeline
+from transformers import BertTokenizer, BertForSequenceClassification
 
 # Authenticate to Twitter using Twitter API v2
 client = tweepy.Client(bearer_token=secret.BEARER_TOKEN)  # requires secret.py, which is not included in the repository. ask from han yi
 
+# Load pre-trained model and tokenizer
+# REQUIRES TO FINE TUNE MODEL FIRST! (at pytorch or tensorflow i guess)
+# tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+# model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
+
 # Load pre-trained sentiment analysis pipeline
+# sentiment_pipeline = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer)
 sentiment_pipeline = pipeline("sentiment-analysis")
 
 def fetch_tweets(query, max_results=10, tweet_fields=['text', 'lang']):
@@ -18,11 +25,15 @@ def fetch_tweets(query, max_results=10, tweet_fields=['text', 'lang']):
             return []
             #time.sleep(15 * 60)  # Wait for 15 minutes before retrying
 
-def analyze_sentiment(tweets):
+def analyze_sentiment(tweets, collection):
     sentiments = []
     for tweet in tweets:
         result = sentiment_pipeline(tweet.text)
         sentiments.append(result[0])
+    
+    if sentiments != []:
+        store_tweets(tweets, sentiments, collection)
+    
     return sentiments
 
 def store_tweets(tweets, sentiments, collection):
@@ -39,8 +50,7 @@ def section6_data(collection):
     query = 'flight delay'
     tweets = fetch_tweets(query=query, max_results=10, tweet_fields=['text', 'lang'])
     tweet_texts = [tweet for tweet in tweets if tweet.lang == 'en']
-    sentiments = analyze_sentiment(tweet_texts)
-    store_tweets(tweet_texts, sentiments, collection)
+    sentiments = analyze_sentiment(tweet_texts, collection)
 
     """Query MongoDB to retrieve data for section 6."""
     documents = collection.find({"query": query})
