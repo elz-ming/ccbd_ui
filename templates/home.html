@@ -11,10 +11,40 @@
   </head>
   <body>
     <header>
-      <h1>{{ title }}</h1>
+      <h1>Cloud Computing P1 Group 3</h1>
     </header>
     <main>
-      <p>Welcome to the Flask application hosted on Vercel!</p>
+      <section id="section-1">
+        <h2>Section 1</h2>
+        <!-- Placeholder for section 1 -->
+      </section>
+      <section id="section-2">
+        <h2>Section 2</h2>
+        <!-- Placeholder for section 2 -->
+      </section>
+      <section id="section-3">
+        <h2>Section 3</h2>
+        <!-- Placeholder for section 3 -->
+      </section>
+      <section id="section-4">
+        <h2>Section 4</h2>
+        <div class="section-content">
+          {% if section_4_chart %}
+          <img src="{{ section_4_chart }}" alt="Section 4 Chart" />
+          {% else %}
+          <p>No data available for Section 4.</p>
+          {% endif %}
+        </div>
+      </section>
+      <section id="section-5">
+        <h2>Section 5</h2>
+        <!-- Placeholder for section 5 -->
+      </section>
+      <section id="section-6">
+        <h2>Section 6</h2>
+        <!-- Placeholder for section 6 -->
+      </section>
     </main>
+    <footer></footer>
   </body>
 </html>
