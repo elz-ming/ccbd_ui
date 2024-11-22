@@ -30,7 +30,7 @@
             alt="Airport Delays Chart"
           />
           {% else %}
-          <p>No data available for airport delays.</p>
+          <p>No data available for Task 1.</p>
           {% endif %}
         </div>
       </section>
@@ -40,13 +40,19 @@
           {% if task2_chart %}
           <img src="{{ task2_chart }}" alt="Task 2 Chart" />
           {% else %}
-          <p>No data available for Section 4.</p>
+          <p>No data available for Task 2.</p>
           {% endif %}
         </div>
       </section>
       <section id="section-3">
-        <h2>Section 3</h2>
-        <!-- Placeholder for section 3 -->
+        <h2>Task 3 - Count by Country</h2>
+        <div class="section-content">
+          {% if task3_chart %}
+          <img src="{{ task3_chart }}" alt="Task 3 Chart" />
+          {% else %}
+          <p>No data available for Task 3.</p>
+          {% endif %}
+        </div>
       </section>
       <section id="section-4">
         <h2>Task 4 - Mean Trust Score</h2>
@@ -54,7 +60,7 @@
           {% if task4_chart %}
           <img src="{{ task4_chart }}" alt="Task 4 Chart" />
           {% else %}
-          <p>No data available for Section 4.</p>
+          <p>No data available for Task 4.</p>
           {% endif %}
         </div>
       </section>

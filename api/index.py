@@ -27,6 +27,9 @@ def home():
     task2_data = query_task2_data(collection)
     task2_chart = create_task2_chart(task2_data)
 
+    task3_data = query_task3_data(collection)
+    task3_chart = create_task3_chart(task3_data)
+
     task4_data = query_task4_data(collection)
     task4_chart = create_task4_chart(task4_data)
 
@@ -35,6 +38,7 @@ def home():
         "home.html",
         task1_chart=task1_chart,
         task2_chart=task2_chart,
+        task3_chart=task3_chart,
         task4_chart=task4_chart,
     )
 
@@ -65,7 +69,7 @@ def create_task1_chart(task1_data):
     airport_counts = [item["count"] for item in airports]
 
     # Plot airlines chart
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(8, 5))
     plt.bar(airline_labels, airline_counts, color="skyblue")
     plt.title("Task 1: Airline Delays")
     plt.xlabel("Airline")
@@ -159,8 +163,45 @@ def create_task2_chart(data):
     plt.close()
 
     return f"data:image/png;base64,{chart_base64}"
-  
-  
+
+
+def query_task3_data(collection):
+    """Query MongoDB to retrieve data for Task 3."""
+    document = collection.find_one(
+        {"file_name": "task3"})  # Query by file_name
+    if not document:
+        return None
+    return document["data"]  # Return the 'data' field
+
+
+def create_task3_chart(data):
+    """Generate a bar chart for Task 3 using Matplotlib."""
+    if not data:
+        raise ValueError("Data for Task 3 is empty or None")
+
+    # Extract country names and counts
+    countries = [item["country"] for item in data]
+    counts = [item["count"] for item in data]
+
+    # Generate the bar chart
+    plt.figure(figsize=(12, 6))
+    plt.bar(countries, counts, color="skyblue")
+    plt.title("Task 3: Count by Country")
+    plt.xlabel("Country")
+    plt.ylabel("Count")
+    plt.xticks(rotation=90)  # Rotate x-axis labels for better readability
+    plt.tight_layout()
+
+    # Save chart to Base64
+    img = io.BytesIO()
+    plt.savefig(img, format="png")
+    img.seek(0)
+    chart_base64 = base64.b64encode(img.getvalue()).decode()
+    plt.close()
+
+    return f"data:image/png;base64,{chart_base64}"
+
+
 def query_task4_data(collection):
     """Query MongoDB to retrieve data for section-4."""
     document = collection.find_one(
@@ -180,7 +221,7 @@ def create_task4_chart(data):
     mean_trust_scores = [item["mean_trust_score"] for item in data]
 
     # Create the chart
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     plt.bar(channels, mean_trust_scores, color="skyblue")
     plt.title("Mean Trust Score by Channel")
     plt.xlabel("Channel")
