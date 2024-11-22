@@ -1,6 +1,8 @@
-import matplotlib.pyplot as plt
 import io
 import base64
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('Agg')
 
 
 def query_task1_data(collection):
