@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-
-def query_task4_data(collection):
+def query_section_4_data(collection):
     """Query MongoDB to retrieve data for section-4."""
     document = collection.find_one(
         {"file_name": "task4"})  # Query by file_name
@@ -12,7 +11,7 @@ def query_task4_data(collection):
     return document.get("data", [])
 
 
-def create_task4_chart(data):
+def create_section_4_chart(data):
     """Generate a bar chart for section-4 using Matplotlib."""
     if not data:
         return None
