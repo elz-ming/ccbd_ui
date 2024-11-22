@@ -21,7 +21,6 @@ app = Flask(__name__, template_folder="../templates",
 
 @app.route('/')
 def home():
-
     task1_data = query_task1_data(collection)
     task1_chart = create_task1_chart(task1_data)
 
@@ -160,8 +159,8 @@ def create_task2_chart(data):
     plt.close()
 
     return f"data:image/png;base64,{chart_base64}"
-
-
+  
+  
 def query_task4_data(collection):
     """Query MongoDB to retrieve data for section-4."""
     document = collection.find_one(
