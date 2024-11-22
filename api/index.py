@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 import task4
+import task6
 
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
@@ -21,11 +22,15 @@ def home():
     section_4_data = task4.query_section_4_data(collection)
     section_4_chart = task4.create_section_4_chart(section_4_data)
 
+    # Query data for section-6
+    section_6_data = task6.section6_data(collection)
+        
     # Pass data and chart to the template
     return render_template(
         "home.html",
         title="Cloud Computing P1 Group 3",
         section_4_chart=section_4_chart,
+        section_6_data=section_6_data
     )
 
 

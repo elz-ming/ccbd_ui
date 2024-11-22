@@ -42,7 +42,22 @@
       </section>
       <section id="section-6">
         <h2>Section 6</h2>
-        <!-- Placeholder for section 6 -->
+        <div class="section-content">
+          {% if section_6_data %}
+            <p>Recent tweets sentiment score about delayed flights.</p>
+            <ul>
+              {% for doc in section_6_data %}
+                <li>
+                  <p>Text: {{ doc.text }}</p>
+                  <p>Language: {{ doc.lang }}</p>
+                  <p>Sentiment: {{ doc.sentiment.label }} ({{ doc.sentiment.score }})</p>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No data available for Section 6.</p>
+          {% endif %}
+        </div>
       </section>
     </main>
     <footer></footer>
