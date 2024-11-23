@@ -49,7 +49,7 @@
               {% for sentiment in section_6_data %}
                 <li>
                   <p>Tweet: {{ sentiment['text'] }}</p>
-                  <p>Sentiment: {{ sentiment['sentiment']['label'] }} Score:{{ sentiment['sentiment']['score'] }}</p>
+                  <p>Sentiment: {{ sentiment['sentiment']}}</p>
                   <p></p>
                 </li>
               {% endfor %}
