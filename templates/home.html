@@ -46,11 +46,11 @@
           {% if section_6_data %}
             <p>Recent tweets sentiment score about delayed flights.</p>
             <ul>
-              {% for doc in section_6_data %}
+              {% for sentiment in section_6_data %}
                 <li>
-                  <p>Text: {{ doc.text }}</p>
-                  <p>Language: {{ doc.lang }}</p>
-                  <p>Sentiment: {{ doc.sentiment.label }} ({{ doc.sentiment.score }})</p>
+                  <p>Tweet: {{ sentiment['text'] }}</p>
+                  <p>Sentiment: {{ sentiment['sentiment']['label'] }} Score:{{ sentiment['sentiment']['score'] }}</p>
+                  <p></p>
                 </li>
               {% endfor %}
             </ul>
