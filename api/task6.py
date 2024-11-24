@@ -86,17 +86,15 @@ def categorise_by_date(sentiments):
     return sentiments
 
 def store_tweets(sentiments, db):
-    collection = db['output']
+    collection = db['organised_tweets']
     for sentiment_data in sentiments:
         if not collection.find_one({'text': sentiment_data['text']}):
             collection.insert_one(sentiment_data)
     print("Tweets and sentiments stored in MongoDB.")
 
 def retrieve_tweets(db):
-    collection = db['output']
-    sentiment_data = collection.find()
-    print(sentiment_data)
-    return sentiment_data
+    collection = db['organised_tweets']
+    return list(collection.find())
     
 def section6_data(db):
     tweets = fetch_tweets(db)
