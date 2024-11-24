@@ -40,51 +40,49 @@ def sentiment_labels(text, model, tokenizer, config):
 
 def fetch_tweets(db):
     query = 'flight delay'
-    max_results= 19
+    max_results= 50
     tweet_fields= ['text', 'lang', 'created_at']
     collection = db['tweets'] 
-    start_time = '2023-09-01T00:00:00Z' #September
-    end_time = '2023-10-31T23:59:59Z' #October
+
     while True:
         try:
             response = client.search_recent_tweets(
                 query=query,
                 max_results=max_results,
                 tweet_fields=tweet_fields,
-                start_time=start_time,
-                end_time=end_time
                 )
-            tweet_data_list = []
             for tweet in response.data:
-                collection.insert_one(tweet.data)
-                tweet_data_list.append(tweet.data)
-            return tweet_data_list
+                if not collection.find_one({'text': tweet['text']}):
+                    collection.insert_one(tweet.data)
+            
+            return list(collection.find()) if collection.find() else []
         except tweepy.errors.TooManyRequests as e:
             reset_time = int(e.response.headers.get("x-rate-limit-reset"))
             print(f"Rate limit exceeded. Wait for {(reset_time - int(time.time()))} seconds to run again.")
             data = list(collection.find()) if collection.find() else []
             return data
         
-def categorise_by_month(sentiments):
+def categorise_by_date(sentiments):
     for sentiment in sentiments:
         created_at = sentiment['created_at']
         
         if created_at:
-            created_at = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%fZ')
-            print(f"created_at: {created_at}")
-        elif not isinstance(created_at, datetime):
-            print(f"Unexpected type for created_at: {type(created_at)}")
-            continue
-        if created_at.month == 9:
-            sentiment['month'] = 'September'
-        elif created_at.month == 10:
-            sentiment['month'] = 'October'
-        elif created_at.month == 11:
-            sentiment['month'] = 'November'
-        else:
-            print(f"Missing created_at for tweet: {sentiment['text']}")
-    for sentiment in sentiments:
-        print(f"sentiment: {sentiment}")
+            date = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%fZ')
+            
+            sentiment['date'] = date.strftime('%d-%m-%Y')
+        #     print(f"date: {created_at}")
+        # elif not isinstance(created_at, datetime):
+        #     print(f"Unexpected type for created_at: {type(created_at)}")
+        #     continue
+        # if created_at.month == 9:
+        #     sentiment['month'] = 'September'
+        # elif created_at.month == 10:
+        #     sentiment['month'] = 'October'
+        # elif created_at.month == 11:
+        #     sentiment['month'] = 'November'
+        # else:
+        #     print(f"Missing created_at for tweet: {sentiment['text']}")
+        print(f"sentiment: {sentiment}")        
     return sentiments
 
 def store_tweets(sentiments, db):
@@ -112,7 +110,7 @@ def section6_data(db):
         }
         sentiments.append(tweet_data)
     
-    categorised_sentiments = categorise_by_month(sentiments)
+    categorised_sentiments = categorise_by_date(sentiments)
     store_tweets(categorised_sentiments, db)     
 
     return categorised_sentiments
