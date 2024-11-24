@@ -1,10 +1,10 @@
 import tweepy
 import secret
 import numpy as np
+from datetime import datetime, timedelta
+import time
 from scipy.special import softmax
-from transformers import pipeline
 from transformers import AutoModelForSequenceClassification, AutoConfig, AutoTokenizer
-from transformers import BertTokenizer, BertForSequenceClassification, BertConfig
 
 # Authenticate to Twitter using Twitter API v2
 client = tweepy.Client(bearer_token=secret.BEARER_TOKEN)  # requires secret.py, which is not included in the repository cause idw my keys to be exposed. ask from han yi
@@ -15,16 +15,16 @@ config = AutoConfig.from_pretrained(MODEL)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL)
 
 # Load DistilBERT model and tokenizer
-model_name_d = "distilbert-base-uncased-finetuned-sst-2-english"
-tokenizer_d = AutoTokenizer.from_pretrained(model_name_d)
-config_d = AutoConfig.from_pretrained(model_name_d)
-model_d = AutoModelForSequenceClassification.from_pretrained(model_name_d)
+# model_name_d = "distilbert-base-uncased-finetuned-sst-2-english"
+# tokenizer_d = AutoTokenizer.from_pretrained(model_name_d)
+# config_d = AutoConfig.from_pretrained(model_name_d)
+# model_d = AutoModelForSequenceClassification.from_pretrained(model_name_d)
 
-# Load BERT model and tokenizer
-model_name_b = 'bert-base-uncased'
-tokenizer_b = BertTokenizer.from_pretrained(model_name_b)
-config_b = BertConfig.from_pretrained(model_name_b)
-model_b = BertForSequenceClassification.from_pretrained(model_name_b)
+# # Load BERT model and tokenizer
+# model_name_b = 'bert-base-uncased'
+# tokenizer_b = BertTokenizer.from_pretrained(model_name_b)
+# config_b = BertConfig.from_pretrained(model_name_b)
+# model_b = BertForSequenceClassification.from_pretrained(model_name_b)
 
 def sentiment_labels(text, model, tokenizer, config):
     encoded_input = tokenizer(text, padding=True, truncation=True, max_length=512, return_tensors='pt')
@@ -38,43 +38,81 @@ def sentiment_labels(text, model, tokenizer, config):
 # Load pre-trained sentiment analysis pipeline
 # sentiment_pipeline = pipeline('sentiment-analysis', model=model,tokenizer=tokenizer)
 
-def fetch_tweets(query, max_results=10, tweet_fields=['text', 'lang']):
+def fetch_tweets(db):
+    query = 'flight delay'
+    max_results= 19
+    tweet_fields= ['text', 'lang', 'created_at']
+    collection = db['tweets'] 
+    start_time = '2023-09-01T00:00:00Z' #September
+    end_time = '2023-10-31T23:59:59Z' #October
     while True:
         try:
-            response = client.search_recent_tweets(query=query, max_results=max_results, tweet_fields=tweet_fields)
-            return response.data
-        except tweepy.errors.TooManyRequests:
-            print("Rate limit exceeded. Waiting for 15 minutes.")
-            return []
-            #time.sleep(15 * 60)  # Wait for 15 minutes before retrying
-
-def analyze_sentiment(tweets):
-    sentiments = []
-    for tweet in tweets:
-        result = sentiment_labels(tweet.text, model, tokenizer, config)
-        tweet_data = {
-            'text': tweet.text,
-            'lang': tweet.lang,
-            'sentiment': result
-        }
-        sentiments.append(tweet_data)
+            response = client.search_recent_tweets(
+                query=query,
+                max_results=max_results,
+                tweet_fields=tweet_fields,
+                start_time=start_time,
+                end_time=end_time
+                )
+            tweet_data_list = []
+            for tweet in response.data:
+                collection.insert_one(tweet.data)
+                tweet_data_list.append(tweet.data)
+            return tweet_data_list
+        except tweepy.errors.TooManyRequests as e:
+            reset_time = int(e.response.headers.get("x-rate-limit-reset"))
+            print(f"Rate limit exceeded. Wait for {(reset_time - int(time.time()))} seconds to run again.")
+            data = list(collection.find()) if collection.find() else []
+            return data
         
+def categorise_by_month(sentiments):
+    for sentiment in sentiments:
+        created_at = sentiment['created_at']
+        
+        if created_at:
+            created_at = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%fZ')
+            print(f"created_at: {created_at}")
+        elif not isinstance(created_at, datetime):
+            print(f"Unexpected type for created_at: {type(created_at)}")
+            continue
+        if created_at.month == 9:
+            sentiment['month'] = 'September'
+        elif created_at.month == 10:
+            sentiment['month'] = 'October'
+        elif created_at.month == 11:
+            sentiment['month'] = 'November'
+        else:
+            print(f"Missing created_at for tweet: {sentiment['text']}")
+    for sentiment in sentiments:
+        print(f"sentiment: {sentiment}")
     return sentiments
 
-def store_tweets(sentiments, collection):
+def store_tweets(sentiments, db):
+    collection = db['output']
     for sentiment_data in sentiments:
-        collection.insert_one(sentiment_data)
+        if not collection.find_one({'text': sentiment_data['text']}):
+            collection.insert_one(sentiment_data)
     print("Tweets and sentiments stored in MongoDB.")
 
-def section6_data(collection):
-    query = 'flight delay'
-    tweets = fetch_tweets(query=query, max_results=10, tweet_fields=['text', 'lang'])
-    tweet_texts = [tweet for tweet in tweets if tweet.lang == 'en']
-    sentiments = analyze_sentiment(tweet_texts)
-    #     store_tweets(sentiments, collection)
+def retrieve_tweets(db):
+    collection = db['output']
+    sentiment_data = collection.find()
+    print(sentiment_data)
+    return sentiment_data
+    
+def section6_data(db):
+    tweets = fetch_tweets(db)
+    sentiments = []
+    for tweet in tweets:
+        tweet_data = {
+            'text': tweet['text'],
+            'lang': tweet['lang'],
+            'created_at': tweet['created_at'],
+            'sentiment': sentiment_labels(tweet['text'], model, tokenizer, config)
+        }
+        sentiments.append(tweet_data)
+    
+    categorised_sentiments = categorise_by_month(sentiments)
+    store_tweets(categorised_sentiments, db)     
 
-    #Query MongoDB to retrieve data for section 6
-    # documents = collection.find()
-    # print(documents)
-
-    return sentiments
+    return categorised_sentiments

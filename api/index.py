@@ -23,7 +23,7 @@ def home():
     section_4_chart = task4.create_section_4_chart(section_4_data)
 
     # Query data for section-6
-    section_6_data = task6.section6_data(collection)
+    section_6_data = task6.section6_data(db)
         
     # Pass data and chart to the template
     return render_template(
