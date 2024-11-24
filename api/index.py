@@ -6,6 +6,7 @@ import io
 import base64
 import matplotlib
 import matplotlib.pyplot as plt
+import task6
 matplotlib.use('Agg')
 
 load_dotenv()
@@ -33,6 +34,9 @@ def home():
     task4_data = query_task4_data(collection)
     task4_chart = create_task4_chart(task4_data)
 
+    # Query data for section-6
+    section_6_data = task6.section6_data(db)
+        
     # Pass data and chart to the template
     return render_template(
         "home.html",
@@ -40,6 +44,7 @@ def home():
         task2_chart=task2_chart,
         task3_chart=task3_chart,
         task4_chart=task4_chart,
+        section_6_data=section_6_data
     )
 
 

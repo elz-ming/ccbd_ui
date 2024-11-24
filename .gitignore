@@ -2,6 +2,8 @@
 *.log
 *.pyc
 __pycache__
+results
+secret.py
 
 # Environments 
 .env 
