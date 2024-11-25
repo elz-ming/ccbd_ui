@@ -14,8 +14,7 @@ from modules.task3 import query_task3_data, create_task3_chart
 from modules.task4 import query_task4_data, create_task4_chart
 from modules.task5a import query_task5a_data, create_task5a_chart
 from modules.task5b import query_task5b_data, create_task5b_chart
-from modules.task6 import query_task6_data, create_task6_chart, preprocess_task6_data, train_task6_models, predict_task6_sentiments
-
+from modules.task6 import query_task6_data, create_task6_chart, query_task6_chart_data
 client = MongoClient(MONGODB_URI)
 db = client["project2"]
 collection = db["output"]
@@ -45,10 +44,8 @@ def home():
     task5b_chart = create_task5b_chart(task5b_data)
 
     task6_data = query_task6_data(collection)
-    df, X, y = preprocess_task6_data(task6_data)
-    models = train_task6_models(X, y)
-    predictions = predict_task6_sentiments(models, date_encoded=4)  # Example for day 4
-    task6_chart = create_task6_chart(df, predictions, date_encoded=4)
+    task6_chart_data = query_task6_chart_data(collection)
+    task6_chart = create_task6_chart(task6_chart_data)
 
     # Pass data and chart to the template
     return render_template(
