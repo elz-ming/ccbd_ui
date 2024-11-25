@@ -39,7 +39,6 @@ def home():
 
     task5_data, task5_accuracy = query_task5_data(collection)
     task5_chart = create_task5_chart(task5_data)
-    task5_table = create_task5_table(task5_data)
 
     task6_data = query_task6_data(collection)
     task6_table = create_task6_table(task6_data)
@@ -53,7 +52,7 @@ def home():
         task4_chart=task4_chart,
         task5_accuracy=task5_accuracy,
         task5_chart=task5_chart,
-        task5_table=task5_table,
+        task5_data=task5_data,
         task6_table=task6_table,
     )
 
