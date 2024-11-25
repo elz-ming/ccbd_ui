@@ -203,8 +203,9 @@ section h2 {
 }
 
 footer {
-  background-color: #333;
-  color: white;
+  height: 10vh;
+  background-color: #000000;
+  color: #ffffff;
   padding: 1rem;
   text-align: center;
 }
