@@ -72,19 +72,19 @@
         <h2>Section 6</h2>
         <div class="section-content">
           {% if section_6_data %}
-            <p>Recent tweets sentiment score about delayed flights.</p>
-            <ul>
-              {% for sentiment in section_6_data %}
-                <li>
-                  <p>Tweet: {{ sentiment['text'] }}</p>
-                  <p>Sentiment: {{ sentiment['sentiment']}}</p>
-                  <p>Date: {{ sentiment['date']}}</p>
-                  <br>
-                </li>
-              {% endfor %}
-            </ul>
+          <p>Recent tweets sentiment score about delayed flights.</p>
+          <ul>
+            {% for sentiment in section_6_data %}
+            <li>
+              <p>Tweet: {{ sentiment['text'] }}</p>
+              <p>Sentiment: {{ sentiment['sentiment']}}</p>
+              <p>Date: {{ sentiment['date']}}</p>
+              <br />
+            </li>
+            {% endfor %}
+          </ul>
           {% else %}
-            <p>No data available for Section 6.</p>
+          <p>No data available for Section 6.</p>
           {% endif %}
         </div>
       </section>

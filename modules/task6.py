@@ -1,13 +1,17 @@
 import tweepy
-import secret
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 from scipy.special import softmax
 from transformers import AutoModelForSequenceClassification, AutoConfig, AutoTokenizer
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")
+
 # Authenticate to Twitter using Twitter API v2
-client = tweepy.Client(bearer_token=secret.BEARER_TOKEN)  # requires secret.py, which is not included in the repository cause idw my keys to be exposed. ask from han yi
+client = tweepy.Client(bearer_token=BEARER_TOKEN)  # requires secret.py, which is not included in the repository cause idw my keys to be exposed. ask from han yi
 
 MODEL = f"cardiffnlp/twitter-roberta-base-sentiment-latest"
 tokenizer = AutoTokenizer.from_pretrained(MODEL)
