@@ -88,22 +88,24 @@
           {% endif %}
         </div>
       </section>
-      <section id="section-5">
-        <h2>Task 5 - Sentiment Analysis</h2>
+      <section id="section-5a">
+        <h2>Task 5A - Sentiment Analysis</h2>
         <div class="section-content">
-          <div id="sentiment-left">
-            {% if task5_accuracy %}
-            <p><strong>Model Accuracy:</strong> {{ task5_accuracy }}</p>
+          <div class="sentiment-left">
+            {% if task5a_accuracy %}
+            <p class="accuracy">
+              <strong>Model Accuracy:</strong> {{ task5a_accuracy }}
+            </p>
             {% else %}
             <p>No accuracy data available.</p>
-            {% endif %} {% if task5_chart %}
-            <img src="{{ task5_chart }}" alt="Sentiment Distribution Chart" />
+            {% endif %} {% if task5a_chart %}
+            <img src="{{ task5a_chart }}" alt="Sentiment Distribution Chart" />
             {% else %}
-            <p>No chart available for task-5.</p>
+            <p>No chart available for task-5a.</p>
             {% endif %}
           </div>
-          <div id="sentiment-right">
-            {% for record in task5_data %}
+          <div class="sentiment-right">
+            {% for record in task5a_data %}
             <div class="card">
               <p><strong>Text:</strong> {{ record.text }}</p>
               <p>
@@ -130,6 +132,57 @@
                 {% endif %};"
                 >
                   {{ record.calculated_sentiment }}
+                </span>
+              </p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      <section id="section-5b">
+        <h2>Task 5B - Sentiment Analysis</h2>
+        <div class="section-content">
+          <div class="sentiment-left">
+            {% if task5b_accuracy %}
+            <p class="accuracy">
+              <strong>Model Accuracy:</strong> {{ task5b_accuracy }}
+            </p>
+            {% else %}
+            <p>No accuracy data available.</p>
+            {% endif %} {% if task5b_chart %}
+            <img src="{{ task5b_chart }}" alt="Sentiment Distribution Chart" />
+            {% else %}
+            <p>No chart available for task-5b.</p>
+            {% endif %}
+          </div>
+          <div class="sentiment-right">
+            {% for record in task5b_data %}
+            <div class="card">
+              <p><strong>Text:</strong> {{ record.text }}</p>
+              <p>
+                <strong>Airline Sentiment Gold:</strong>
+                <span
+                  style="color: 
+                {% if record.airline_sentiment_gold == 'negative' %}red
+                {% elif record.airline_sentiment_gold == 'neutral' %}blue
+                {% elif record.airline_sentiment_gold == 'positive' %}green
+                {% else %}black
+                {% endif %};"
+                >
+                  {{ record.airline_sentiment_gold }}
+                </span>
+              </p>
+              <p>
+                <strong>Calculated Sentiment:</strong>
+                <span
+                  style="color: 
+                {% if record.predicted_sentiment == 'negative' %}red
+                {% elif record.predicted_sentiment == 'neutral' %}blue
+                {% elif record.predicted_sentiment == 'positive' %}green
+                {% else %}black
+                {% endif %};"
+                >
+                  {{ record.predicted_sentiment }}
                 </span>
               </p>
             </div>

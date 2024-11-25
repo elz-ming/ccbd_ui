@@ -15,6 +15,7 @@ h2 {
 img {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -113,11 +114,12 @@ section h2 {
   max-width: 40%;
 }
 
-#section-5 {
+#section-5a,
+#section-5b {
   height: 80vh;
 }
 
-#sentiment-left {
+.sentiment-left {
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -125,7 +127,7 @@ section h2 {
   height: 100%;
 }
 
-#sentiment-right {
+.sentiment-right {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -135,7 +137,7 @@ section h2 {
   overflow-y: scroll;
 }
 
-#sentiment-right .card {
+.sentiment-right .card {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -145,8 +147,12 @@ section h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#section-5 p {
+.accuracy {
   font-size: 4rem;
+}
+
+.sentiment-right p {
+  font-size: 3rem;
 }
 
 footer {
