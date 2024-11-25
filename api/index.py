@@ -12,7 +12,8 @@ from modules.task1 import query_task1_data, create_task1_chart
 from modules.task2 import query_task2_data, create_task2_chart
 from modules.task3 import query_task3_data, create_task3_chart
 from modules.task4 import query_task4_data, create_task4_chart
-from modules.task5 import query_task5_data, create_task5_chart, create_task5_table
+from modules.task5a import query_task5a_data, create_task5a_chart
+from modules.task5b import query_task5b_data, create_task5b_chart
 from modules.task6 import query_task6_data, create_task6_table
 
 client = MongoClient(MONGODB_URI)
@@ -37,8 +38,11 @@ def home():
     task4_data = query_task4_data(collection)
     task4_chart = create_task4_chart(task4_data)
 
-    task5_data, task5_accuracy = query_task5_data(collection)
-    task5_chart = create_task5_chart(task5_data)
+    task5a_data, task5a_accuracy = query_task5a_data(collection)
+    task5a_chart = create_task5a_chart(task5a_data)
+
+    task5b_data, task5b_accuracy = query_task5b_data(collection)
+    task5b_chart = create_task5b_chart(task5b_data)
 
     task6_data = query_task6_data(collection)
     task6_table = create_task6_table(task6_data)
@@ -50,9 +54,12 @@ def home():
         task2_chart=task2_chart,
         task3_chart=task3_chart,
         task4_chart=task4_chart,
-        task5_accuracy=task5_accuracy,
-        task5_chart=task5_chart,
-        task5_data=task5_data,
+        task5a_accuracy=task5a_accuracy,
+        task5a_chart=task5a_chart,
+        task5a_data=task5a_data,
+        task5b_accuracy=task5b_accuracy,
+        task5b_chart=task5b_chart,
+        task5b_data=task5b_data,
         task6_table=task6_table,
     )
 
