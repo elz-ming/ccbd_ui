@@ -177,6 +177,9 @@ section h2 {
 }
 
 #section-6 .card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   max-width: 70vw;
 }
 
