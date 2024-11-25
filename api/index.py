@@ -14,7 +14,7 @@ from modules.task3 import query_task3_data, create_task3_chart
 from modules.task4 import query_task4_data, create_task4_chart
 from modules.task5a import query_task5a_data, create_task5a_chart
 from modules.task5b import query_task5b_data, create_task5b_chart
-from modules.task6 import query_task6_data, create_task6_chart, query_task6_chart_data
+from modules.task6 import query_task6_data
 client = MongoClient(MONGODB_URI)
 db = client["project2"]
 collection = db["output"]
