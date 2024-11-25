@@ -203,32 +203,6 @@
             <p>No chart available for task-6.</p>
             {% endif %}
           </div>
-          <div class="content-right">
-            {% for record in task6_data %}
-            <div class="card">
-              <!-- Left Side -->
-              <div class="card-left">
-                <p class="text"><strong>Text:</strong> {{ record.text }}</p>
-                <p><strong>Language:</strong> {{ record.lang }}</p>
-                <p><strong>Created At:</strong> {{ record.created_at }}</p>
-              </div>
-
-              <!-- Right Side -->
-              <div class="card-right">
-                <span
-                  style="color: 
-                  {% if record.sentiment == 'negative' %}red
-                  {% elif record.sentiment == 'neutral' %}blue
-                  {% elif record.sentiment == 'positive' %}green
-                  {% else %}black
-                  {% endif %};"
-                >
-                  {{ record.sentiment }}
-                </span>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
         </div>
       </section>
     </main>
