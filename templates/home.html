@@ -44,12 +44,15 @@
         <h2>Section 6</h2>
         <div class="section-content">
           {% if section_6_data %}
-            <p>Recent tweets sentiment score about delayed flights.</p>
+            <h3>Recent tweets sentiment score about delayed flights.</h3>
             <ul>
               {% for sentiment in section_6_data %}
                 <li>
                   <p>Tweet: {{ sentiment['text'] }}</p>
-                  <p>Sentiment: {{ sentiment['sentiment']}}</p>
+                  <p> Sentiment: 
+                    <span style="color: {% if sentiment['sentiment'] == 'positive' %}green{% elif sentiment['sentiment'] == 'negative' %}red{% else %}darkgrey{% endif %};">
+                        {{ sentiment['sentiment'] }}
+                    </span></p>
                   <p>Date: {{ sentiment['date']}}</p>
                   <br>
                 </li>
