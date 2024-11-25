@@ -27,19 +27,23 @@ def create_task6_chart(df, predictions, date_encoded):
 
     plt.figure(figsize=(8, 5))
 
+    # Define colors for sentiments
+    sentiment_colors = {"negative": "red", "neutral": "blue", "positive": "green"}
+
     # Plot trend lines for each sentiment
     for sentiment, group_data in df_melted.groupby("sentiment"):
-        plt.plot(group_data["date"], group_data["proportion"], label=sentiment)
+        plt.plot(group_data["date"], group_data["proportion"], label=sentiment, color=sentiment_colors[sentiment])
 
     # Highlight predictions
     prediction_data = df_melted[df_melted["date"].str.startswith("Predicted")]
-    for sentiment, color in zip(["negative", "neutral", "positive"], ["red", "blue", "green"]):
+    for sentiment, color in sentiment_colors.items():
         sentiment_data = prediction_data[prediction_data["sentiment"] == sentiment]
         plt.scatter(
             sentiment_data["date"],
             sentiment_data["proportion"],
             color=color,
             s=100,
+            edgecolor="black",
             label=f"Predicted ({sentiment})"
         )
 
