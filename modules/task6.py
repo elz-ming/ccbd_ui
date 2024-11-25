@@ -6,14 +6,6 @@ import io
 import base64
 
 
-def query_task6_data(collection):
-    """Query MongoDB to retrieve data for Task 6."""
-    document = collection.find_one({"file_name": "task6"})
-    if not document:
-        return []
-    return document.get("data", [])
-
-
 def query_task6_chart_data(collection):
     """Retrieve pre-generated chart data for Task 6 from MongoDB."""
     document = collection.find_one({"file_name": "task6_chart_data"})
