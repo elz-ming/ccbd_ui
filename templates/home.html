@@ -91,7 +91,7 @@
       <section id="section-5a">
         <h2>Task 5A - Sentiment Analysis w/ SentiWordNet</h2>
         <div class="section-content">
-          <div class="sentiment-left">
+          <div class="content-left">
             {% if task5a_accuracy %}
             <p class="accuracy">
               <strong>Model Accuracy:</strong> {{ task5a_accuracy }}
@@ -104,7 +104,7 @@
             <p>No chart available for task-5a.</p>
             {% endif %}
           </div>
-          <div class="sentiment-right">
+          <div class="content-right">
             {% for record in task5a_data %}
             <div class="card">
               <p class="text"><strong>Text:</strong> {{ record.text }}</p>
@@ -145,7 +145,7 @@
           Regression
         </h2>
         <div class="section-content">
-          <div class="sentiment-left">
+          <div class="content-left">
             {% if task5b_accuracy %}
             <p class="accuracy">
               <strong>Model Accuracy:</strong> {{ task5b_accuracy }}
@@ -158,7 +158,7 @@
             <p>No chart available for task-5b.</p>
             {% endif %}
           </div>
-          <div class="sentiment-right">
+          <div class="content-right">
             {% for record in task5b_data %}
             <div class="card">
               <p class="text"><strong>Text:</strong> {{ record.text }}</p>
@@ -194,32 +194,41 @@
         </div>
       </section>
       <section id="section-6">
-        <h2>Section 6</h2>
+        <h2>Task 6 - Exploratary Data Analysis</h2>
         <div class="section-content">
-          {% for record in task6_data %}
-          <div class="card">
-            <!-- Left Side -->
-            <div class="card-left">
-              <p class="text"><strong>Text:</strong> {{ record.text }}</p>
-              <p><strong>Language:</strong> {{ record.lang }}</p>
-              <p><strong>Created At:</strong> {{ record.created_at }}</p>
-            </div>
-
-            <!-- Right Side -->
-            <div class="card-right">
-              <span
-                style="color: 
-                {% if record.sentiment == 'negative' %}red
-                {% elif record.sentiment == 'neutral' %}blue
-                {% elif record.sentiment == 'positive' %}green
-                {% else %}black
-                {% endif %};"
-              >
-                {{ record.sentiment }}
-              </span>
-            </div>
+          <div class="content-left">
+            {% if task6_chart %}
+            <img src="{{ task6_chart }}" alt="Sentiment Distribution Chart" />
+            {% else %}
+            <p>No chart available for task-6.</p>
+            {% endif %}
           </div>
-          {% endfor %}
+          <div class="content-right">
+            {% for record in task6_data %}
+            <div class="card">
+              <!-- Left Side -->
+              <div class="card-left">
+                <p class="text"><strong>Text:</strong> {{ record.text }}</p>
+                <p><strong>Language:</strong> {{ record.lang }}</p>
+                <p><strong>Created At:</strong> {{ record.created_at }}</p>
+              </div>
+
+              <!-- Right Side -->
+              <div class="card-right">
+                <span
+                  style="color: 
+                  {% if record.sentiment == 'negative' %}red
+                  {% elif record.sentiment == 'neutral' %}blue
+                  {% elif record.sentiment == 'positive' %}green
+                  {% else %}black
+                  {% endif %};"
+                >
+                  {{ record.sentiment }}
+                </span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </section>
     </main>
