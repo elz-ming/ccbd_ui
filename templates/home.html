@@ -65,28 +65,24 @@
         </div>
       </section>
       <section id="section-5">
-        <h2>Section 5</h2>
-        <!-- Placeholder for section 5 -->
+        <h2>Task 5 - Sentiment Analysis</h2>
+        <div class="section-content">
+          <div id="sentiment-left">
+            {% if task5_accuracy %}
+            <p><strong>Model Accuracy:</strong> {{ task5_accuracy }}</p>
+            {% else %}
+            <p>No accuracy data available.</p>
+            {% endif %} {% if task5_chart %}
+            <img src="{{ task5_chart }}" alt="Sentiment Distribution Chart" />
+            {% else %}
+            <p>No chart available for task-5.</p>
+            {% endif %}
+          </div>
+        </div>
       </section>
       <section id="section-6">
         <h2>Section 6</h2>
-        <div class="section-content">
-          {% if section_6_data %}
-          <p>Recent tweets sentiment score about delayed flights.</p>
-          <ul>
-            {% for sentiment in section_6_data %}
-            <li>
-              <p>Tweet: {{ sentiment['text'] }}</p>
-              <p>Sentiment: {{ sentiment['sentiment']}}</p>
-              <p>Date: {{ sentiment['date']}}</p>
-              <br />
-            </li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p>No data available for Section 6.</p>
-          {% endif %}
-        </div>
+        <div class="section-content">{{ task6_table|safe }}</div>
       </section>
     </main>
     <footer></footer>

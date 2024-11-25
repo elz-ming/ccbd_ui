@@ -12,7 +12,8 @@ from modules.task1 import query_task1_data, create_task1_chart
 from modules.task2 import query_task2_data, create_task2_chart
 from modules.task3 import query_task3_data, create_task3_chart
 from modules.task4 import query_task4_data, create_task4_chart
-from modules.task6 import section6_data
+from modules.task5 import query_task5_data, create_task5_chart, create_task5_table
+from modules.task6 import query_task6_data, create_task6_table
 
 client = MongoClient(MONGODB_URI)
 db = client["project2"]
@@ -36,7 +37,12 @@ def home():
     task4_data = query_task4_data(collection)
     task4_chart = create_task4_chart(task4_data)
 
-    section_6_data = section6_data(db)
+    task5_data, task5_accuracy = query_task5_data(collection)
+    task5_chart = create_task5_chart(task5_data)
+    task5_table = create_task5_table(task5_data)
+
+    task6_data = query_task6_data(collection)
+    task6_table = create_task6_table(task6_data)
         
     # Pass data and chart to the template
     return render_template(
@@ -45,7 +51,10 @@ def home():
         task2_chart=task2_chart,
         task3_chart=task3_chart,
         task4_chart=task4_chart,
-        section_6_data=section_6_data
+        task5_accuracy=task5_accuracy,
+        task5_chart=task5_chart,
+        task5_table=task5_table,
+        task6_table=task6_table,
     )
 
 

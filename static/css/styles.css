@@ -57,11 +57,24 @@ section h2 {
   justify-content: center;
   gap: 4rem;
   width: 100%;
-  padding: 0 4rem;
+  padding: 4rem;
 }
 
 #section-1 img {
   max-width: 40%;
+}
+
+#sentiment-left {
+  display: flex;
+  flex-direction: column;
+}
+
+#section-5 p {
+  font-size: 10rem;
+}
+
+#section-5 table {
+  font-size: 2rem;
 }
 
 footer {
