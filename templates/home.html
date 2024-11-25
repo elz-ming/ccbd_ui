@@ -12,6 +12,30 @@
   <body>
     <header>
       <h1>Big Data P1 Group 3</h1>
+      <div id="header-content">
+        <div class="person">
+          <a href="https://www.linkedin.com/in/manesh-kaliannan"
+            >Manesh Kaliannan</a
+          >
+        </div>
+        <div class="person">
+          <a href="https://www.linkedin.com/in/elz-ming/">Lin Zhenming</a>
+        </div>
+        <div class="person">
+          <a href="http://linkedin.com/in/rachel-poh-wl">Poh Wen Lin, Rachel</a>
+        </div>
+        <div class="person">
+          <a href="https://www.linkedin.com/in/rachelwanjm  "
+            >Rachel Wan Jing Mun</a
+          >
+        </div>
+        <div class="person">
+          <a href="https://www.linkedin.com/in/tehhanyi">Teh Han Yi</a>
+        </div>
+        <div class="person">
+          <a href="www.linkedin.com/in/kelishatanjy">Kelisha Tan Jia Yi</a>
+        </div>
+      </div>
     </header>
     <main>
       <section id="section-1">
@@ -77,6 +101,39 @@
             {% else %}
             <p>No chart available for task-5.</p>
             {% endif %}
+          </div>
+          <div id="sentiment-right">
+            {% for record in task5_data %}
+            <div class="card">
+              <p><strong>Text:</strong> {{ record.text }}</p>
+              <p>
+                <strong>Airline Sentiment Gold:</strong>
+                <span
+                  style="color: 
+                {% if record.airline_sentiment_gold == 'negative' %}red
+                {% elif record.airline_sentiment_gold == 'neutral' %}blue
+                {% elif record.airline_sentiment_gold == 'positive' %}green
+                {% else %}black
+                {% endif %};"
+                >
+                  {{ record.airline_sentiment_gold }}
+                </span>
+              </p>
+              <p>
+                <strong>Calculated Sentiment:</strong>
+                <span
+                  style="color: 
+                {% if record.calculated_sentiment == 'negative' %}red
+                {% elif record.calculated_sentiment == 'neutral' %}blue
+                {% elif record.calculated_sentiment == 'positive' %}green
+                {% else %}black
+                {% endif %};"
+                >
+                  {{ record.calculated_sentiment }}
+                </span>
+              </p>
+            </div>
+            {% endfor %}
           </div>
         </div>
       </section>

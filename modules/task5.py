@@ -36,7 +36,7 @@ def create_task5_chart(data):
     sentiment_counts = pd.Series(sentiments).value_counts()
 
     # Create the chart
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(8, 5))
     sentiment_counts.plot(kind="bar", color="skyblue")
     plt.title("Sentiment Distribution")
     plt.xlabel("Sentiment")
