@@ -115,11 +115,12 @@ section h2 {
 }
 
 #section-5a,
-#section-5b {
+#section-5b,
+#section-6 {
   height: 80vh;
 }
 
-.sentiment-left {
+.content-left {
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -127,7 +128,7 @@ section h2 {
   height: 100%;
 }
 
-.sentiment-right {
+.content-right {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -137,7 +138,7 @@ section h2 {
   overflow-y: scroll;
 }
 
-.sentiment-right .card {
+.content-right .card {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -151,24 +152,18 @@ section h2 {
   font-size: 4rem;
 }
 
-.sentiment-right p {
+.content-right p {
   font-size: 3rem;
 }
 
-.sentiment-right .text {
+.content-right .text {
   font-size: 5rem;
-}
-
-#section-6 .section-content {
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 4rem;
-  height: 90%;
-  overflow-y: scroll;
 }
 
 #section-6 .card {
   display: flex;
+  flex-direction: row;
+  gap: 0;
   justify-content: space-between;
   padding: 4rem;
   background-color: #ffffff;
@@ -176,18 +171,18 @@ section h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#section-6 .card-left {
+.card-left {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-width: 70vw;
+  max-width: 85%;
 }
 
-#section-6 .card-right {
+.card-right {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10vw;
+  width: 10%;
 }
 
 #section-6 .card-right span {
